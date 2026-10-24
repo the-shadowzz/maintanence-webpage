@@ -85,16 +85,41 @@
     .progress-card { width: min(100%, 430px); margin: 34px auto 0; padding: 17px 19px 18px; border: 1px solid var(--line); border-radius: 15px; background: var(--panel); box-shadow: 0 20px 70px rgba(0,0,0,.22); backdrop-filter: blur(14px); text-align: left; }
     .progress-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #d9d5f3; font: 11px/1.4 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 13px; }
     .progress-label span:last-child { color: #b7a1ff; }
-    .track { height: 5px; background: rgba(255,255,255,.08); border-radius: 99px; overflow: hidden; }
-    .fill { height: 100%; width: 68%; border-radius: inherit; background: linear-gradient(90deg, #7551ef, #8f77ff, #70a7ff); box-shadow: 0 0 18px rgba(142,112,255,.65); animation: load 2.2s ease-out both; }
-    .tiny-note { margin-top: 12px; color: #77768f; font: 11px/1.5 system-ui, sans-serif; }
+    .launch-date { text-align: center; color: #c7b5ff; font-size: clamp(16px, 3.5vw, 21px); letter-spacing: .12em; margin: 0 0 19px; text-shadow: 0 0 20px rgba(154,104,255,.32); }
+    .countdown { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: center; gap: clamp(4px, 1.5vw, 12px); text-align: center; }
+    .time-unit { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+    .time-unit span { font-size: clamp(22px, 5.5vw, 39px); line-height: 1; color: #fff; font-variant-numeric: tabular-nums; text-shadow: 0 0 20px rgba(154,104,255,.25); }
+    .time-unit small { font: 9px/1.2 system-ui, sans-serif; letter-spacing: .08em; color: #9692b6; }
+    .time-separator { color: #8f77ff; font-size: clamp(18px, 4vw, 28px); transform: translateY(-7px); }
+    .countdown-live { color: #b7a1ff; }
+    .tiny-note { margin-top: 17px; color: #77768f; font: 11px/1.5 system-ui, sans-serif; text-align: center; }
     .bottom { display: flex; justify-content: center; align-items: center; gap: 9px; margin-top: 46px; color: #74738b; font: 11px/1.6 system-ui, sans-serif; letter-spacing: .06em; }
     .bottom .spark { color: #a98aff; }
+    .admin-trigger { position: fixed; top: 18px; right: 18px; z-index: 20; border: 1px solid rgba(183,164,255,.28); border-radius: 10px; padding: 10px 14px; color: #eee9ff; background: rgba(20,20,38,.86); font: 12px/1.2 system-ui, sans-serif; letter-spacing: .04em; cursor: pointer; backdrop-filter: blur(12px); }
+    .admin-trigger:hover { border-color: #9a68ff; background: rgba(45,31,78,.94); }
+    .admin-overlay { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(4,4,12,.82); backdrop-filter: blur(10px); }
+    .admin-overlay.open { display: flex; }
+    .admin-dialog { position: relative; width: min(100%, 460px); border: 1px solid rgba(183,164,255,.25); border-radius: 18px; padding: 28px; background: #11111f; box-shadow: 0 25px 100px rgba(0,0,0,.55); text-align: center; }
+    .admin-dialog h2 { margin: 0 0 9px; font-size: 25px; }
+    .admin-dialog p { margin: 0 0 20px; color: #aaa9c2; font: 14px/1.6 system-ui, sans-serif; }
+    .admin-code { width: 100%; padding: 14px; border: 1px solid rgba(183,164,255,.25); border-radius: 10px; outline: none; background: #090912; color: white; text-align: center; font: 22px/1.2 system-ui, sans-serif; letter-spacing: .45em; }
+    .admin-code:focus { border-color: #9a68ff; }
+    .admin-actions { display: flex; gap: 10px; margin-top: 14px; }
+    .admin-actions button, .admin-close { border: 1px solid rgba(183,164,255,.25); border-radius: 10px; padding: 12px 16px; color: #eee9ff; background: rgba(154,104,255,.18); font: 13px system-ui, sans-serif; cursor: pointer; }
+    .admin-actions button { flex: 1; }
+    .admin-actions .cancel { background: transparent; }
+    .admin-error { min-height: 18px; margin-top: 12px; color: #ff8b9a; font: 12px system-ui, sans-serif; }
+    .admin-frame-overlay { position: fixed; inset: 0; z-index: 60; display: none; flex-direction: column; background: #090912; }
+    .admin-frame-overlay.open { display: flex; }
+    .admin-frame-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; color: #eee9ff; background: #11111f; border-bottom: 1px solid rgba(183,164,255,.2); font: 13px system-ui, sans-serif; }
+    .admin-frame-bar span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .admin-close { padding: 8px 12px; flex: 0 0 auto; }
+    .admin-frame { border: 0; width: 100%; flex: 1; background: white; }
+    @media (max-width: 520px) { .admin-trigger { top: 12px; right: 12px; padding: 8px 10px; font-size: 11px; } .admin-dialog { padding: 23px 18px; } }
     .pixel { position: fixed; width: 8px; height: 8px; background: #a98aff; opacity: .5; box-shadow: 0 0 16px rgba(169,138,255,.7); animation: float 5s ease-in-out infinite; }
     .p1 { left: 13%; top: 30%; } .p2 { right: 14%; top: 24%; animation-delay: -2s; width: 5px; height: 5px; } .p3 { left: 20%; bottom: 20%; animation-delay: -1s; width: 4px; height: 4px; } .p4 { right: 21%; bottom: 28%; animation-delay: -3s; }
     @keyframes blink { 50% { opacity: .35; } }
     @keyframes float { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-13px) rotate(45deg); } }
-    @keyframes load { from { width: 0; } to { width: 68%; } }
     @media (max-width: 520px) {
       .page { width: min(100% - 28px, 820px); padding: 24px 0; }
       header { margin-bottom: 42px; }
@@ -104,7 +129,8 @@
       .emblem { width: 86px; height: 86px; border-radius: 23px; margin-bottom: 24px; }
       .emblem img { width: 52px; height: 52px; }
       .subtitle { font-size: 14px; }
-      .progress-card { margin-top: 28px; }
+      .progress-card { margin-top: 28px; padding: 16px 12px; }
+      .time-unit small { font-size: 8px; letter-spacing: .03em; }
       .bottom { margin-top: 36px; text-align: center; }
       .p1 { left: 6%; } .p2 { right: 7%; }
     }
@@ -112,6 +138,7 @@
   </style>
 </head>
 <body>
+  <button class="admin-trigger" id="admin-trigger" type="button">Admin Panel</button>
   <div class="noise"></div><div class="orb one"></div><div class="orb two"></div>
   <i class="pixel p1"></i><i class="pixel p2"></i><i class="pixel p3"></i><i class="pixel p4"></i>
   <div class="page">
@@ -127,13 +154,85 @@
       <div class="emblem"><img src="assets/favicon.ico" alt="Kage-TV emblem"></div>
       <h1>We’re building<br><span class="accent">something epic.</span></h1>
       <p class="subtitle">Kage-TV is getting a new look. We’re working behind the scenes to bring you a better anime experience. Stay close — the next chapter is almost here.</p>
-      <section class="progress-card" aria-label="Website development status">
-        <div class="progress-label"><span>Rebuilding the experience</span><span>In progress</span></div>
-        <div class="track"><div class="fill"></div></div>
-        <div class="tiny-note">Polishing the details. Preparing for launch.</div>
+      <section class="progress-card countdown-card" aria-label="Countdown to launch">
+        <div class="launch-date">18th DECEMBER 2026</div>
+        <div class="progress-label"><span>TIME UNTIL LAUNCH</span><span class="countdown-live">COUNTING DOWN</span></div>
+        <div class="countdown" role="timer" aria-live="off">
+          <div class="time-unit"><span id="days">000</span><small>DAYS</small></div>
+          <span class="time-separator">:</span>
+          <div class="time-unit"><span id="hours">00</span><small>HOURS</small></div>
+          <span class="time-separator">:</span>
+          <div class="time-unit"><span id="minutes">00</span><small>MINUTES</small></div>
+          <span class="time-separator">:</span>
+          <div class="time-unit"><span id="seconds">00</span><small>SECONDS</small></div>
+        </div>
+        <div class="tiny-note" id="countdown-note">The next chapter begins soon.</div>
       </section>
     </main>
     <footer class="bottom"><span class="spark">✦</span> KAGE-TV <span>·</span> THE NEXT CHAPTER IS LOADING <span class="spark">✦</span></footer>
   </div>
+  <div class="admin-overlay" id="admin-overlay" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+    <form class="admin-dialog" id="admin-form">
+      <h2 id="admin-title">Admin Access</h2>
+      <p>Enter the four-digit access code to continue.</p>
+      <input class="admin-code" id="admin-code" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" minlength="4" placeholder="••••" aria-label="Four digit admin code" autocomplete="off" required>
+      <div class="admin-actions"><button type="submit">Unlock Panel</button><button class="cancel" id="admin-cancel" type="button">Cancel</button></div>
+      <div class="admin-error" id="admin-error" role="status"></div>
+    </form>
+  </div>
+  <div class="admin-frame-overlay" id="admin-frame-overlay" aria-label="Kage-TV admin website">
+    <div class="admin-frame-bar"><span>Admin Panel · kage-tv.lovable.app</span><button class="admin-close" id="admin-frame-close" type="button">Close Panel ✕</button></div>
+    <iframe class="admin-frame" src="about:blank" id="admin-frame" title="Kage-TV admin panel" allow="fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+  <script>
+    // Admin code gate. Note: a code embedded in frontend JavaScript is not secure authentication.
+    const adminTrigger = document.getElementById("admin-trigger");
+    const adminOverlay = document.getElementById("admin-overlay");
+    const adminForm = document.getElementById("admin-form");
+    const adminCode = document.getElementById("admin-code");
+    const adminError = document.getElementById("admin-error");
+    const adminFrameOverlay = document.getElementById("admin-frame-overlay");
+    const adminFrame = document.getElementById("admin-frame");
+    function closeAdminLogin() { adminOverlay.classList.remove("open"); adminError.textContent = ""; adminForm.reset(); }
+    adminTrigger.addEventListener("click", () => { adminOverlay.classList.add("open"); setTimeout(() => adminCode.focus(), 0); });
+    document.getElementById("admin-cancel").addEventListener("click", closeAdminLogin);
+    adminOverlay.addEventListener("click", event => { if (event.target === adminOverlay) closeAdminLogin(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") { closeAdminLogin(); adminFrameOverlay.classList.remove("open"); } });
+    adminForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (adminCode.value === "0009") {
+        closeAdminLogin();
+        adminFrame.src = "https://kage-tv.lovable.app";
+        adminFrameOverlay.classList.add("open");
+      } else {
+        adminError.textContent = "Incorrect code. Please try again.";
+        adminCode.select();
+      }
+    });
+    document.getElementById("admin-frame-close").addEventListener("click", () => { adminFrameOverlay.classList.remove("open"); adminFrame.src = "about:blank"; });
+
+    // Countdown target: midnight at the start of 18 December 2026 (India Standard Time).
+    const launchTime = new Date("2026-12-18T00:00:00+05:30").getTime();
+    const pad = value => String(value).padStart(2, "0");
+    function updateCountdown() {
+      const remaining = launchTime - Date.now();
+      if (remaining <= 0) {
+        document.getElementById("days").textContent = "000";
+        document.getElementById("hours").textContent = "00";
+        document.getElementById("minutes").textContent = "00";
+        document.getElementById("seconds").textContent = "00";
+        document.getElementById("countdown-note").textContent = "The launch date has arrived!";
+        document.querySelector(".countdown-live").textContent = "LAUNCH DAY";
+        return;
+      }
+      const totalSeconds = Math.floor(remaining / 1000);
+      document.getElementById("days").textContent = String(Math.floor(totalSeconds / 86400));
+      document.getElementById("hours").textContent = pad(Math.floor((totalSeconds % 86400) / 3600));
+      document.getElementById("minutes").textContent = pad(Math.floor((totalSeconds % 3600) / 60));
+      document.getElementById("seconds").textContent = pad(totalSeconds % 60);
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
